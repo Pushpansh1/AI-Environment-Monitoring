@@ -1,0 +1,24 @@
+# Ignore Python environments
+myenv/
+venv/
+env/
+myenv/
+
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
+
+# Ignore Jupyter checkpoint files
+.ipynb_checkpoints/
+
+# Ignore environment variables
+.env
+*.env
+.dll
+.pyd
+
+# Ignore OS & IDE stuff
+.DS_Store
+*.log
+*.sqlite3
+*.vscode/

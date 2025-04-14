@@ -1,0 +1,60 @@
+# API Configuration
+api:
+  weather_endpoint: "https://api.openweathermap.org/data/2.5/weather"
+  air_quality_endpoint: "https://api.openweathermap.org/data/2.5/air_pollution"
+  forecast_endpoint: "https://api.openweathermap.org/data/2.5/forecast"
+  units: "metric"
+
+# UI Configuration
+ui:
+  default_location:
+    city: "New York"
+    lat: 40.7128
+    lon: -74.0060
+  refresh_interval: 3600  
+  theme: "light"  
+# Data Processing
+data_processing:
+  weather:
+    required_fields: ["temp", "feels_like", "temp_min", "temp_max", "pressure", "humidity", "wind_speed", "wind_deg", "clouds", "dt", "sys", "weather"]
+    cache_duration: 3600  # in seconds
+  air_quality:
+    required_fields: ["aqi", "co", "no", "no2", "o3", "so2", "pm2_5", "pm10", "nh3"]
+    cache_duration: 3600  # in seconds
+
+# Models
+models:
+  temperature_forecast:
+    type: "lstm"
+    lookback: 24  
+    features: ["temperature", "humidity", "pressure", "wind_speed", "hour_sin", "hour_cos", "month_sin", "month_cos"]
+    hidden_units: 50
+    dropout_rate: 0.2
+    batch_size: 32
+    epochs: 50
+  disaster_risk:
+    type: "random_forest"
+    features: ["temperature", "humidity", "pressure", "wind_speed", "rain_1h", "aqi", "pm2_5", "o3"]
+    threshold: 0.7  
+
+# Thresholds for alerts
+thresholds:
+  temperature:
+    high: 35.0  
+    low: 0.0    
+  humidity:
+    high: 90.0  
+    low: 20.0   
+  air_quality:
+    poor: 100   
+  wind_speed:
+    high: 10.0  
+  precipitation:
+    heavy: 10.0  
+
+# Logging
+logging:
+  level: "INFO"  
+  file: "logs/app.log"
+  max_size: 10485760  # 10 MB
+  backup_count: 5
